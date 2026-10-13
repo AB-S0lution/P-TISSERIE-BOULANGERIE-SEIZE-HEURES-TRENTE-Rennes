@@ -108,7 +108,7 @@ export function quoteCard(q: { text: string; source: string; critical?: boolean;
 
 /** Photo d'illustration (Unsplash) : figure lazy, recadrée en cover. */
 export function photoFig(ph: Photo, cls = '', caption = true): string {
-  return `<figure class="ph ${cls}" data-reveal><img src="${ph.src}" alt="${esc(ph.alt)}" width="${ph.width}" height="${ph.height}" loading="lazy" decoding="async" />${caption ? `<figcaption class="ph__cap">Photo d’illustration · ${esc(ph.credit)}</figcaption>` : ''}</figure>`
+  return `<figure class="ph ${cls}" data-reveal><img src="${ph.src}" alt="${esc(ph.alt)}" width="${ph.width}" height="${ph.height}" loading="lazy" decoding="async" />${caption ? `<figcaption class="ph__cap">Illustration · ${esc(ph.credit)}</figcaption>` : ''}</figure>`
 }
 
 /** Bande de photos d'illustration pour une page (titre + grille). */

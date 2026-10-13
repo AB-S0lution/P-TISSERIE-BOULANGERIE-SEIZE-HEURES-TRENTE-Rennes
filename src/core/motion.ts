@@ -95,7 +95,9 @@ export function enhance(root: HTMLElement): void {
       start: 'top 92%',
       once: true,
       onEnter: (els) =>
-        gsap.to(els, { opacity: 1, y: 0, scale: 1, duration: 0.9, stagger: 0.08, ease: 'power3.out', overwrite: true }),
+        // Plafond du décalage : après un saut de défilement (lancer au doigt, ancre), un lot
+        // de dizaines d'éléments ne doit pas laisser l'écran vide plusieurs secondes.
+        gsap.to(els, { opacity: 1, y: 0, scale: 1, duration: 0.9, stagger: Math.min(0.08, 0.5 / els.length), ease: 'power3.out', overwrite: true }),
     })
 
     // Compteurs
