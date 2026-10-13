@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>16h30, pâtisserie et boulangerie à Rennes | Seize Heures Trente</title>
+    <meta name="description" content="16h30 (Seize Heures Trente) : pâtisserie et boulangerie artisanales à Rennes, fondées par Marion Juhel. Deux adresses : 3 rue Hoche et 2 passage Jeanne-Chauveau. Site de démonstration." />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F6EEE1" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1B1415" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="canonical" href="https://ab-s0lution.github.io/P-TISSERIE-BOULANGERIE-SEIZE-HEURES-TRENTE-Rennes/" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="16h30, Seize Heures Trente" />
+    <meta property="og:title" content="16h30, pâtisserie et boulangerie à Rennes" />
+    <meta property="og:description" content="L'heure du goûter, version Rennes : pâtisserie, pains et engagements zéro déchet. Deux adresses. Site de démonstration." />
+    <meta name="twitter:card" content="summary" />
+    <script>
+      // Redirection depuis 404.html (GitHub Pages) : on restaure l'URL demandée avant le routeur.
+      (function () {
+        var m = location.search.match(/[?&]p=([^&]+)/);
+        if (m) {
+          var base = document.querySelector('link[rel=icon]').getAttribute('href').replace('favicon.svg', '');
+          history.replaceState(null, '', base + decodeURIComponent(m[1]).replace(/^\//, '') + location.hash);
+        }
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion-on');
+      })();
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Bakery",
+            "@id": "https://ab-s0lution.github.io/P-TISSERIE-BOULANGERIE-SEIZE-HEURES-TRENTE-Rennes/#hoche",
+            "name": "16h30",
+            "alternateName": ["Pâtisserie Boulangerie Seize Heures Trente", "SEIZE HEURES TRENTE"],
+            "description": "Pâtisserie et salon de thé, 3 rue Hoche à Rennes.",
+            "telephone": "+33 2 99 63 37 65",
+            "address": { "@type": "PostalAddress", "streetAddress": "3 rue Hoche", "postalCode": "35000", "addressLocality": "Rennes", "addressCountry": "FR" },
+            "geo": { "@type": "GeoCoordinates", "latitude": 48.11328, "longitude": -1.67746 },
+            "foundingDate": "2018",
+            "founder": { "@type": "Person", "name": "Marion Juhel" },
+            "sameAs": ["https://www.instagram.com/patisserie_16h30/", "https://www.facebook.com/patisserie16h30"]
+          },
+          {
+            "@type": "Bakery",
+            "@id": "https://ab-s0lution.github.io/P-TISSERIE-BOULANGERIE-SEIZE-HEURES-TRENTE-Rennes/#jeanne-chauveau",
+            "name": "16h30, passage Jeanne-Chauveau",
+            "description": "Boulangerie et atelier de production, Hôtel-Dieu, Rennes.",
+            "address": { "@type": "PostalAddress", "streetAddress": "2 passage Jeanne-Chauveau", "postalCode": "35000", "addressLocality": "Rennes", "addressCountry": "FR" },
+            "parentOrganization": { "@type": "Organization", "name": "SEIZE HEURES TRENTE" }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Aller au contenu</a>
+    <div id="app"></div>
+    <noscript><p style="padding:2rem;font-family:sans-serif">16h30, pâtisserie et boulangerie à Rennes : 3 rue Hoche, tél. 02 99 63 37 65. Ce site de démonstration demande JavaScript.</p></noscript>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

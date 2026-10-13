@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Page introuvable | 16h30, Seize Heures Trente</title>
+    <style>
+      body { margin: 0; min-height: 100vh; display: grid; place-items: center; font-family: system-ui, sans-serif; color: #22191A; background: #F6EEE1; text-align: center; padding: 1rem; box-sizing: border-box; }
+      a { color: inherit; }
+    </style>
+    <script>
+      // Application monopage : on renvoie vers l'accueil avec le chemin demandé, le routeur le restaure.
+      (function () {
+        var base = '/P-TISSERIE-BOULANGERIE-SEIZE-HEURES-TRENTE-Rennes/';
+        var path = location.pathname;
+        if (path.indexOf(base) === 0 && path.length > base.length) {
+          location.replace(base + '?p=' + encodeURIComponent(path.slice(base.length)) + location.hash);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <main>
+      <h1>Il est 16h31, cette page est partie</h1>
+      <p>La page demandée n’existe pas ou a été déplacée.</p>
+      <p><a href="/P-TISSERIE-BOULANGERIE-SEIZE-HEURES-TRENTE-Rennes/">Retour à l’accueil de 16h30</a></p>
+    </main>
+  </body>
+</html>
