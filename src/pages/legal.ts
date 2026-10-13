@@ -1,5 +1,6 @@
 import { typo } from '../core/dom'
-import { pageHero } from '../core/ui'
+import { pageHero, photoStrip } from '../core/ui'
+import { photo } from '../data/photos'
 import { site, addresses } from '../data/site'
 
 export const title = 'Mentions légales | 16h30, Seize Heures Trente'
@@ -11,7 +12,7 @@ ${pageHero({ title: 'Mentions légales', lead: 'Informations publiques sur l’e
 <section class="section section--tight"><div class="wrap prose">
   <h2>Ce site</h2>
   <p>Ce site est une <strong>démonstration de design</strong>, non officielle, réalisée sans lien contractuel avec l’entreprise présentée. Il n’a pas de back-end : aucune commande, aucun paiement, aucune donnée collectée. Les prix, descriptions, articles, événements et statistiques signalés « exemple » sont fictifs.</p>
-  <p>Les illustrations sont des créations originales en SVG. Aucune photo ni logo de la maison n’est utilisé. La palette de couleurs est une proposition et n’est pas l’identité officielle.</p>
+  <p>Les illustrations sont des créations originales en SVG. Les photos sont des photos d’illustration issues d’Unsplash (licence Unsplash) : ce ne sont pas des photos de la maison, et aucun logo de la maison n’est utilisé. La palette de couleurs est une proposition et n’est pas l’identité officielle.</p>
   <h2>L’entreprise présentée</h2>
   <ul>
     <li>Dénomination sociale : ${site.legalName}</li>
@@ -29,5 +30,6 @@ ${pageHero({ title: 'Mentions légales', lead: 'Informations publiques sur l’e
   <p>Le code et les illustrations de cette démonstration sont fournis sous la licence du dépôt. Les marques et noms cités appartiennent à leurs propriétaires.</p>
   <h2>Signaler une erreur</h2>
   <p>Si vous représentez la maison et souhaitez corriger ou retirer ce site, contactez le propriétaire du dépôt GitHub.</p>
-</div></section>`)
+</div></section>
+${photoStrip(['pain-couteau', 'croissants-pile', 'tarte-citron'].map(photo))}`)
 }

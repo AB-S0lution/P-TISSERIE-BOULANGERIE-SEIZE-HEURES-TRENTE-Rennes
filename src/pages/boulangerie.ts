@@ -1,8 +1,8 @@
 import { photoBand } from '../core/ui'
 import { photo } from '../data/photos'
-import { bakeryArt, pastry } from '../core/art'
+import { bakeryArt } from '../core/art'
 import { esc, eur, typo } from '../core/dom'
-import { btn, pageHero, tile } from '../core/ui'
+import { btn, cardMedia, pageHero, photoFig, tile } from '../core/ui'
 import { breads } from '../data/breads'
 
 export const title = 'La boulangerie | 16h30, passage Jeanne-Chauveau, Rennes'
@@ -17,6 +17,7 @@ ${pageHero({
   lead: 'Des pains ronds, des couronnes au sarrasin et une brioche tressée. Le fournil est visible depuis la boutique.',
   art: 'boule',
   seed: 0,
+  photo: photo('pain-panier'),
   actions: btn('Voir les pains', '#pains', 'btn--amber', true) + btn('Venir', 'contact', 'btn--ghost'),
 })}
 
@@ -27,6 +28,7 @@ ${pageHero({
       <h2 class="h-lg" data-split>Le cœur de 16h30</h2>
       <p class="lead" data-reveal>En 2023, la production quitte la rue Hoche pour le passage Jeanne-Chauveau. C’est là que se pétrissent le pain et une grande partie des pâtisseries.</p>
       <p data-reveal>Cette illustration représente le fournil de façon schématique : ce n’est pas une photo du lieu.</p>
+      ${photoFig(photo('pains-grille'), 'ph--wide')}
     </div>
   </div>
 </section>
@@ -39,7 +41,7 @@ ${pageHero({
       ${breads
         .map(
           (b) => `<article class="pcard" data-reveal>
-        <div class="pcard__art" style="--tile:${tile(b.seed + 2)}">${pastry(b.kind, b.seed)}</div>
+        ${cardMedia(b.kind, b.seed, tile(b.seed + 2))}
         <div class="pcard__body"><h3>${esc(b.name)}</h3><p>${esc(b.description)}</p>
         <p class="small"><strong>Farine :</strong> ${esc(b.flour)}<br /><strong>Se garde :</strong> ${esc(b.keeps)}</p>
         <div class="tags">${b.real ? '<span class="tag tag--real">nom réel</span>' : ''}${b.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join('')}</div>

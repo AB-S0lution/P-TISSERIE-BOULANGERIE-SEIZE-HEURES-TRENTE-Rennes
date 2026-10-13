@@ -2,7 +2,7 @@ import { photoBand } from '../core/ui'
 import { photo } from '../data/photos'
 import { pastry } from '../core/art'
 import { esc, typo } from '../core/dom'
-import { btn, pageHero, quoteCard } from '../core/ui'
+import { btn, pageHero, photoImg, quoteCard } from '../core/ui'
 import { roles } from '../data/roles'
 import { stats } from '../data/stats'
 import { testimonials } from '../data/testimonials'
@@ -11,6 +11,9 @@ export const title = 'La maison | 16h30, Seize Heures Trente, Rennes'
 export const description =
   'L’histoire de 16h30, fondée en 2018 par Marion Juhel à Rennes : une pâtisserie régressive, moderne, responsable et abordable, puis une boulangerie en 2023.'
 
+// Mains au travail, vitrines, service : jamais de visage en gros plan.
+const ROLE_PH = ['tarte-fruits-rouges', 'tarte-citron', 'petrissage', 'croissants-plaque', 'comptoir-vitrines', 'theiere-gouter']
+
 export function render(main: HTMLElement): void {
   main.innerHTML = typo(`
 ${pageHero({
@@ -18,6 +21,7 @@ ${pageHero({
   kicker: 'La maison',
   lead: 'C’est ainsi que Marion Juhel décrit la pâtisserie qu’elle a ouverte seule rue Hoche, en 2018. 16h30, c’est l’heure du goûter.',
   art: 'brioche',
+  photo: photo('patisseries-comptoir'),
   actions: btn('Nos engagements', 'engagements', 'btn--amber') + btn('Nos deux adresses', 'contact', 'btn--ghost'),
 })}
 
@@ -35,9 +39,9 @@ ${pageHero({
   <div class="wrap">
     <h2 class="h-lg" data-split>Une histoire en trois dates</h2>
     <div class="timeline" style="margin-top:2.5rem">
-      <div class="tl" data-reveal><time datetime="2018">2018</time><h3>Rue Hoche, toute seule</h3><p>Marion Juhel ouvre 16h30 au 3 rue Hoche, une petite boutique de pâtisserie avec un coin salon de thé. La brioche feuilletée devient la signature de la maison.</p></div>
-      <div class="tl" data-reveal><time datetime="2020">2020</time><h3>Deux distinctions</h3><p>Le Trophée Pâtissier Gault&amp;Millau Grand Ouest et le prix coup de cœur Éco-Défis récompensent la qualité et la démarche : consigne, économies d’eau, emballages limités.</p></div>
-      <div class="tl" data-reveal><time datetime="2023-07">Juillet 2023</time><h3>Passage Jeanne-Chauveau</h3><p>La rue Hoche devient trop petite. Une seconde boutique ouvre à l’Hôtel-Dieu : la production y déménage, la boulangerie naît, le fournil est visible depuis la boutique.</p></div>
+      <div class="tl" data-reveal><figure class="tl__ph">${photoImg(photo('croissant-plateau'))}<figcaption class="ph__cap">Photo d’illustration</figcaption></figure><time datetime="2018">2018</time><h3>Rue Hoche, toute seule</h3><p>Marion Juhel ouvre 16h30 au 3 rue Hoche, une petite boutique de pâtisserie avec un coin salon de thé. La brioche feuilletée devient la signature de la maison.</p></div>
+      <div class="tl" data-reveal><figure class="tl__ph">${photoImg(photo('tartes-vitrine'))}<figcaption class="ph__cap">Photo d’illustration</figcaption></figure><time datetime="2020">2020</time><h3>Deux distinctions</h3><p>Le Trophée Pâtissier Gault&amp;Millau Grand Ouest et le prix coup de cœur Éco-Défis récompensent la qualité et la démarche : consigne, économies d’eau, emballages limités.</p></div>
+      <div class="tl" data-reveal><figure class="tl__ph">${photoImg(photo('pains-grille'))}<figcaption class="ph__cap">Photo d’illustration</figcaption></figure><time datetime="2023-07">Juillet 2023</time><h3>Passage Jeanne-Chauveau</h3><p>La rue Hoche devient trop petite. Une seconde boutique ouvre à l’Hôtel-Dieu : la production y déménage, la boulangerie naît, le fournil est visible depuis la boutique.</p></div>
     </div>
   </div>
 </section>
@@ -62,7 +66,7 @@ ${pageHero({
       <p class="lead" data-reveal>Entre dix et dix-neuf personnes font vivre les deux adresses. Voici les rôles, sans noms : seule Marion Juhel est nommée sur ce site.</p>
     </div>
     <ul class="cards" data-reveal>${roles
-      .map((r) => `<li class="card"><h3 class="h-md">${esc(r.title)}</h3><p style="margin:0">${esc(r.text)}</p><p class="small muted" style="margin:.6rem 0 0">${esc(r.place)} <span class="sample-flag">exemple</span></p></li>`)
+      .map((r, i) => `<li class="card card--media"><figure class="card__ph card__ph--short">${photoImg(photo(ROLE_PH[i % ROLE_PH.length]))}<figcaption class="ph__cap">Photo d’illustration</figcaption></figure><h3 class="h-md">${esc(r.title)}</h3><p style="margin:0">${esc(r.text)}</p><p class="small muted" style="margin:.6rem 0 0">${esc(r.place)} <span class="sample-flag">exemple</span></p></li>`)
       .join('')}</ul>
   </div>
 </section>
@@ -74,7 +78,7 @@ ${pageHero({
         <h2 class="h-lg" data-split>Petit par la taille, grand par le talent</h2>
         <p data-reveal>Le magazine <em>Régal</em> (n° 112, 2023) résumait ainsi la rue Hoche. Voici d’autres voix.</p>
       </div>
-      <div class="panel-art" data-reveal style="background:transparent">${pastry('saintho', 0)}</div>
+      <div class="panel-art panel-art--duo" data-reveal style="background:transparent">${pastry('saintho', 0)}<figure class="ph panel-art__ph"><img src="${photo('tarte-meringuee').src}" alt="${esc(photo('tarte-meringuee').alt)}" width="1200" height="1800" loading="lazy" decoding="async" /><figcaption class="ph__cap">Photo d’illustration · Unsplash</figcaption></figure></div>
     </div>
     <div class="quotes" style="margin-top:2.4rem">${testimonials.filter((t) => ['t6', 't5', 't8'].includes(t.id)).map(quoteCard).join('')}</div>
   </div>

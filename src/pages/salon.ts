@@ -1,8 +1,8 @@
 import { photoBand } from '../core/ui'
-import { photo } from '../data/photos'
+import { photo, type Photo } from '../data/photos'
 import { pastry } from '../core/art'
 import { esc, eur, typo } from '../core/dom'
-import { btn, pageHero, tile } from '../core/ui'
+import { btn, pageHero, photoFig, photoImg, tile } from '../core/ui'
 import { drinks } from '../data/drinks'
 import { formulas } from '../data/gouter-formulas'
 import { hoursHoche } from '../data/hours'
@@ -12,6 +12,8 @@ export const description = 'Le petit salon de thé du 3 rue Hoche : thés, café
 
 const FAM = ['thé', 'café', 'chocolat', 'frais'] as const
 
+const GOUTER: Photo[] = ['gateau-citron-the', 'cafe-viennoiseries', 'cake-tranche', 'cookies', 'babka-tranche', 'viennoiserie-soucoupe'].map(photo)
+
 export function render(main: HTMLElement): void {
   main.innerHTML = typo(`
 ${pageHero({
@@ -20,6 +22,7 @@ ${pageHero({
   lead: 'Une petite salle pour goûter sur place : un thé, une part de cake, et le temps qu’il faut.',
   art: 'tasse',
   seed: 1,
+  photo: photo('theiere-gouter'),
   actions: btn('Les formules', '#formules', 'btn--amber', true) + btn('Y aller', 'contact', 'btn--ghost'),
 })}
 
@@ -45,7 +48,7 @@ ${pageHero({
     <div class="cards cards--3">
       ${formulas
         .map(
-          (f, i) => `<article class="card" data-reveal style="background:${tile(i + 2)};color:#22191A;--muted:#3b2f2c">
+          (f, i) => `<article class="card card--media" data-reveal style="background:${tile(i + 2)};color:#22191A;--muted:#3b2f2c"><figure class="card__ph">${photoImg(GOUTER[i % GOUTER.length])}<figcaption class="ph__cap">Photo d’illustration</figcaption></figure>
         <p class="mono" style="margin:0">${f.people} ${f.people > 1 ? 'personnes' : 'personne'}</p>
         <h3>${esc(f.name)}</h3><p>${esc(f.tagline)}</p>
         <ul class="small">${f.includes.map((x) => `<li>+ ${esc(x)}</li>`).join('')}</ul>
@@ -74,7 +77,7 @@ ${pageHero({
 
 <section class="section">
   <div class="wrap split">
-    <div class="panel-art" data-reveal style="background:#F5D893;padding:2rem">${pastry('tasse', 1)}</div>
+    <div class="panel-art panel-art--duo" data-reveal style="background:#F5D893;padding:2rem">${pastry('tasse', 1)}${photoFig(photo('bocal-creme'), 'panel-art__ph')}</div>
     <div class="stack">
       <h2 class="h-lg" data-split>Apporter son bocal</h2>
       <p class="lead" data-reveal>Pour emporter, la maison propose un bocal consigné à 1 €. On le rapporte, on récupère son euro.</p>

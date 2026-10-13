@@ -1,5 +1,6 @@
 import { typo } from '../core/dom'
-import { pageHero } from '../core/ui'
+import { pageHero, photoStrip } from '../core/ui'
+import { photo } from '../data/photos'
 
 export const title = 'Confidentialité | 16h30, Seize Heures Trente'
 export const description = 'Politique de confidentialité du site de démonstration 16h30 : aucune donnée collectée.'
@@ -18,5 +19,6 @@ ${pageHero({ title: 'Confidentialité', lead: 'Ce site ne collecte rien. Voici c
   <p>Les liens vers Instagram, Facebook et Google Maps ouvrent des services tiers, avec leurs propres règles.</p>
   <h2>Polices et ressources</h2>
   <p>Les polices et les images sont hébergées avec le site : aucune requête vers un service de polices externe.</p>
-</div></section>`)
+</div></section>
+${photoStrip(['pain-sac-kraft', 'bocal-creme', 'cafe-viennoiseries'].map(photo))}`)
 }

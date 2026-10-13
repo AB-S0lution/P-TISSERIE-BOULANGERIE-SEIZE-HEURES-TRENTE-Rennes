@@ -1,7 +1,8 @@
 import { counterArt, jarBig } from '../core/art'
 import { $, reducedMotion, typo } from '../core/dom'
 import { gsap, onLeave } from '../core/motion'
-import { btn, pageHero } from '../core/ui'
+import { btn, pageHero, photoImg } from '../core/ui'
+import { photo } from '../data/photos'
 import { stats } from '../data/stats'
 
 export const title = 'Engagements, la consigne à 1 € | 16h30, Rennes'
@@ -18,6 +19,7 @@ ${pageHero({
   lead: 'Les entremets, glaces et certains gâteaux sont servis dans un bocal consigné 1 €. Rapportez-le : on vous rend l’euro.',
   art: 'bocal',
   seed: 4,
+  photo: photo('bocal-fraise'),
 })}
 
 <section class="section section--tight" id="consigne">
@@ -42,12 +44,12 @@ ${pageHero({
   <div class="wrap">
     <h2 class="h-lg" data-split>Ce que la maison s’engage à faire</h2>
     <div class="cards cards--3" style="margin-top:2rem">
-      <div class="card" data-reveal><h3>Des emballages limités</h3><p>Très peu de plastique à usage unique. Apportez votre sac à pain ou votre boîte.</p></div>
-      <div class="card" data-reveal><h3>Du fait maison</h3><p>« Notre idée est de faire du 100 % maison, tout de A à Z », dit Marion Juhel dans la presse régionale.</p></div>
-      <div class="card" data-reveal><h3>Du bio et du breton</h3><p>Des matières premières majoritairement bio et bretonnes, du commerce équitable quand ce n’est pas local.</p></div>
-      <div class="card" data-reveal><h3>La carte de fidélité</h3><p>Valable uniquement sur les produits achetés sans emballage, selon un avis public. <span class="flag">À confirmer</span></p></div>
-      <div class="card" data-reveal><h3>Moins d’eau</h3><p>Des économiseurs d’eau sur les robinets, relevés lors de la distinction Éco-Défis 2020.</p></div>
-      <div class="card" data-reveal><h3>Moins de gaspillage</h3><p>Pas de baguette au fournil, pour en perdre moins. <span class="flag">À valider</span></p></div>
+      <div class="card card--media" data-reveal><figure class="card__ph">${photoImg(photo('pain-sac-kraft'))}<figcaption class="ph__cap">Photo d’illustration</figcaption></figure><h3>Des emballages limités</h3><p>Très peu de plastique à usage unique. Apportez votre sac à pain ou votre boîte.</p></div>
+      <div class="card card--media" data-reveal><figure class="card__ph">${photoImg(photo('petrissage'))}<figcaption class="ph__cap">Photo d’illustration</figcaption></figure><h3>Du fait maison</h3><p>« Notre idée est de faire du 100 % maison, tout de A à Z », dit Marion Juhel dans la presse régionale.</p></div>
+      <div class="card card--media" data-reveal><figure class="card__ph">${photoImg(photo('biscuits-ble'))}<figcaption class="ph__cap">Photo d’illustration</figcaption></figure><h3>Du bio et du breton</h3><p>Des matières premières majoritairement bio et bretonnes, du commerce équitable quand ce n’est pas local.</p></div>
+      <div class="card card--media" data-reveal><figure class="card__ph">${photoImg(photo('bocal-creme'))}<figcaption class="ph__cap">Photo d’illustration</figcaption></figure><h3>La carte de fidélité</h3><p>Valable uniquement sur les produits achetés sans emballage, selon un avis public. <span class="flag">À confirmer</span></p></div>
+      <div class="card card--media" data-reveal><figure class="card__ph">${photoImg(photo('pains-tranches'))}<figcaption class="ph__cap">Photo d’illustration</figcaption></figure><h3>Moins d’eau</h3><p>Des économiseurs d’eau sur les robinets, relevés lors de la distinction Éco-Défis 2020.</p></div>
+      <div class="card card--media" data-reveal><figure class="card__ph">${photoImg(photo('corbeille-pains'))}<figcaption class="ph__cap">Photo d’illustration</figcaption></figure><h3>Moins de gaspillage</h3><p>Pas de baguette au fournil, pour en perdre moins. <span class="flag">À valider</span></p></div>
     </div>
   </div>
 </section>

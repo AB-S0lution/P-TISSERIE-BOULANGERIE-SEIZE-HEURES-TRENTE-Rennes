@@ -1,5 +1,6 @@
 import { href, typo } from '../core/dom'
-import { btn } from '../core/ui'
+import { btn, photoFig } from '../core/ui'
+import { photo } from '../data/photos'
 
 export const title = 'Page introuvable | 16h30, Seize Heures Trente'
 export const description = 'Cette page n’existe pas ou a été déplacée.'
@@ -16,6 +17,7 @@ export function render(main: HTMLElement): void {
     <h1 class="h-xl" data-split>Il est 16h31, ce gâteau est parti.</h1>
     <p class="lead" style="margin:1.2rem auto 1.6rem" data-reveal>La page demandée n’existe pas. Il reste de la brioche feuilletée à l’accueil.</p>
     <div class="cta-row" style="justify-content:center" data-reveal>${btn('Retour à l’accueil', '', 'btn--amber')}${btn('Voir la pâtisserie', 'patisserie', 'btn--ghost')}</div>
+    <div class="nf__ph">${photoFig(photo('croissant-blanc'), 'ph--wide')}</div>
     <p class="small muted" style="margin-top:2rem"><a href="${href('')}" data-link>16h30</a> · erreur 404</p>
   </div>
 </section>`)

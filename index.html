@@ -24,7 +24,13 @@
           var base = document.querySelector('link[rel=icon]').getAttribute('href').replace('favicon.svg', '');
           history.replaceState(null, '', base + decodeURIComponent(m[1]).replace(/^\//, '') + location.hash);
         }
-        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion-on');
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          document.documentElement.classList.add('motion-on');
+          // Filet de sécurité : si le JS du site ne démarre pas, on rend tout le contenu visible.
+          setTimeout(function () {
+            if (!window.__motionReady) document.documentElement.classList.remove('motion-on');
+          }, 4000);
+        }
       })();
     </script>
     <script type="application/ld+json">

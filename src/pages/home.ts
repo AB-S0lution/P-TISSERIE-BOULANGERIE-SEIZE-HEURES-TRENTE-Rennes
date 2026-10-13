@@ -1,7 +1,7 @@
 import { pastry } from '../core/art'
 import { $, esc, reducedMotion, typo } from '../core/dom'
-import { gsap, ScrollTrigger, onLeave, withContext } from '../core/motion'
-import { btn, photoBand, photoFig, quoteCard, startGouterTicker, tile } from '../core/ui'
+import { MQ, gsap, ScrollTrigger, onLeave, withContext } from '../core/motion'
+import { btn, cardMedia, photoBand, photoFig, quoteCard, startGouterTicker, tile } from '../core/ui'
 import { photo, photos } from '../data/photos'
 import { breads } from '../data/breads'
 import { products } from '../data/products'
@@ -110,7 +110,7 @@ export function render(main: HTMLElement): void {
 <section class="section section--tight" aria-label="Au fournil, en images">
   <div class="wrap">
     ${photoFig(photo('croissants-four'), 'ph--wide')}
-    <div class="ph-strip" style="margin-top:1rem">${['planche-viennoiseries','tartes-vitrine','pains-graines','cafe-viennoiseries','macarons','mie-alveolee','tarte-fruits-rouges'].map((s) => photoFig(photo(s))).join('')}</div>
+    <p class="swipe-hint swipe-hint--strip" aria-hidden="true">Glissez pour voir la suite <span>&rarr;</span></p><div class="ph-strip" style="margin-top:1rem">${['planche-viennoiseries','tartes-vitrine','pains-graines','cafe-viennoiseries','macarons','mie-alveolee','tarte-fruits-rouges'].map((s) => photoFig(photo(s))).join('')}</div>
   </div>
 </section>
 
@@ -140,7 +140,7 @@ export function render(main: HTMLElement): void {
     <h2 class="h-lg" data-split>Aujourd’hui en vitrine</h2>
     <p class="lead muted" style="margin:1rem 0 2rem" data-reveal>Une sélection d’exemple. La vitrine réelle change à chaque fournée. <span class="sample-flag">exemple</span></p>
     <div class="pgrid pgrid--home">
-      ${vitrineItems.map((p) => `<article class="pcard" data-reveal><div class="pcard__art" style="--tile:${tile(p.seed + 1)}">${pastry(p.kind, p.seed)}</div><div class="pcard__body"><h3>${esc(p.name)}</h3><div class="pcard__foot"><span class="price">${(p.price).toFixed(2).replace('.', ',')} €</span><span class="small muted">${p.priceReal ? 'prix relevé' : 'exemple'}</span></div></div></article>`).join('')}
+      ${vitrineItems.map((p) => `<article class="pcard" data-reveal>${cardMedia(p.kind, p.seed, tile(p.seed + 1))}<div class="pcard__body"><h3>${esc(p.name)}</h3><div class="pcard__foot"><span class="price">${(p.price).toFixed(2).replace('.', ',')} €</span><span class="small muted">${p.priceReal ? 'prix relevé' : 'exemple'}</span></div></div></article>`).join('')}
     </div>
   </div>
 </section>
@@ -205,7 +205,7 @@ function initDial(scene: HTMLElement): void {
   const vitrine = $('#vitrine', scene)!
   const dialWrap = $('#dial-wrap', scene)!
 
-  const mobile = window.matchMedia('(max-width: 899px)').matches
+  const mobile = window.matchMedia(MQ.touch).matches
   const state = { p: 0 }
   let current = -1
 
@@ -255,7 +255,8 @@ function initDial(scene: HTMLElement): void {
     scrollTrigger: {
       trigger: scene,
       start: 'top top',
-      end: mobile ? '+=260%' : '+=340%',
+      // Tactile : épinglage plus court, moins de risque de « coller » sous le doigt.
+      end: mobile ? '+=200%' : '+=340%',
       pin: true,
       scrub: 0.6,
       anticipatePin: 1,

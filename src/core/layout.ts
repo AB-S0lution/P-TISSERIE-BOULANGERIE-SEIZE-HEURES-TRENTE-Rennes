@@ -97,7 +97,7 @@ function footer(): string {
       </ul>
     </div>
   </div>
-  <div class="wrap footer__bottom"><span>Illustrations originales en SVG. Aucune photo ni logo de la maison. Palette proposée, non officielle.</span><a href="#top" data-top>Haut de page</a></div>
+  <div class="wrap footer__bottom"><span>Illustrations originales en SVG et photos d’illustration Unsplash. Aucune photo ni logo de la maison. Palette proposée, non officielle.</span><a href="#top" data-top>Haut de page</a></div>
 </footer>`
 }
 

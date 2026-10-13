@@ -44,6 +44,46 @@ export const photos: Photo[] = [
   p('pains-grille', '1732565729552-994c6af761e3', 1000, 1500, 'Pains qui refroidissent sur une grille', 'Fournil'),
   p('glace-cornet', '1595080623303-c5ae68d73e92', 1200, 800, 'Part de gâteau sur une soucoupe à côté d’une tasse de thé rose', 'Goûter'),
   p('brioche-tressee', '1509365465985-25d11c17e812', 800, 1067, 'Roulés briochés à la cannelle saupoudrés de sucre glace', 'Pâtisseries'),
+  p('glace-fraise', '1497034825429-c343d7c6a68f', 1200, 1800, 'Cornet de glace à la fraise tenu à la main sur un fond orangé', 'Goûter'),
+  p('cake-tranche', '1514435390218-898a0e01517a', 1200, 1550, 'Tranche de quatre-quarts sur une assiette, sur un plan en marbre', 'Goûter'),
+  p('tarte-meringuee', '1519915028121-7d3463d20b13', 1200, 1800, 'Tarte meringuée entamée, posée sur un torchon', 'Pâtisseries'),
+  p('tarte-citron', '1543508185-225c92847541', 1200, 800, 'Part de tarte au citron et sa chantilly sur une assiette blanche', 'Pâtisseries'),
+  p('chocolat-copeaux', '1582570675095-9b679953577e', 1200, 962, 'Dessert au chocolat couvert de copeaux, sur fond de grains de café', 'Pâtisseries'),
+  p('babka-tranche', '1588079930225-91d6b0a7bc52', 1200, 1800, 'Babka marbrée au chocolat tranchée, avec une tasse de café', 'Pâtisseries'),
+  p('babka-noisettes', '1614610671146-8572a7c0225b', 1200, 1600, 'Brioche torsadée au chocolat et aux noisettes sur une assiette', 'Pâtisseries'),
+  p('cookies', '1634188023615-7e08901193b6', 1200, 1804, 'Cookies aux pépites de chocolat sur un fond crème', 'Goûter'),
+  p('theiere-gouter', '1638890723491-c1f94139474f', 1200, 969, 'Théière émaillée verte et couronne briochée sucrée sur une table', 'Goûter'),
+  p('gateau-citron-the', '1645516957005-bb18e3ef6408', 1200, 1800, 'Part de gâteau au citron à côté d’une théière', 'Goûter'),
+  p('comptoir-vitrines', '1657498023828-1e0181449d9f', 1200, 800, 'Long comptoir de vitrines éclairées garnies de viennoiseries', 'Fournil'),
+  p('gateau-chocolat', '1722846047434-07c0fc7b1a71', 1200, 1500, 'Part de gâteau au chocolat nappée de sauce, sur une assiette blanche', 'Pâtisseries'),
+  p('bocal-fraise', '1749280446205-93b204271142', 1200, 1801, 'Dessert à la fraise et à la crème dans un bocal en verre', 'Goûter'),
+  p('bocal-creme', '1768203634412-bdcf48b83161', 1200, 800, 'Crème dessert dans un petit pot en verre, cuillère sur une assiette', 'Goûter'),
 ]
 
 export const photo = (slug: string): Photo => photos.find((x) => x.slug === slug) ?? photos[0]
+
+/** Photo d'illustration associée à un type de dessin (cartes produit, articles). */
+const BY_KIND: Record<string, string[]> = {
+  brioche: ['brioche-tressee', 'babka-noisettes'],
+  kouign: ['planche-viennoiseries', 'deux-croissants'],
+  cake: ['cake-tranche', 'gateau-citron-the'],
+  cookie: ['cookies'],
+  financier: ['plateau-gourmandises', 'cake-tranche'],
+  sable: ['tarte-citron', 'tarte-meringuee', 'tarte-fruits-rouges'],
+  saintho: ['patisseries-comptoir', 'tartes-vitrine'],
+  entremets: ['gateau-chocolat', 'chocolat-copeaux', 'desserts-table'],
+  boule: ['pains-graines', 'pain-planche', 'pain-table-bois', 'levain-planche', 'pain-jute', 'corbeille-pains'],
+  tresse: ['brioche-tressee', 'babka-noisettes'],
+  couronne: ['pain-plateau-rond', 'theiere-gouter'],
+  croissant: ['croissants-table', 'croissant-plateau', 'croissants-four'],
+  glace: ['glace-fraise'],
+  macaron: ['macarons'],
+  tasse: ['theiere-gouter', 'cafe-viennoiseries'],
+  bocal: ['bocal-fraise', 'bocal-creme'],
+  flan: ['bocal-creme', 'tarte-meringuee'],
+  babka: ['babka-tranche', 'babka-noisettes'],
+}
+export const kindPhoto = (kind: string, seed = 0): Photo => {
+  const l = BY_KIND[kind] ?? ['croissants-table']
+  return photo(l[Math.abs(seed) % l.length])
+}

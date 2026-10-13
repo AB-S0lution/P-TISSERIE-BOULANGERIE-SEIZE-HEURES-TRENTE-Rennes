@@ -1,4 +1,4 @@
-import type { Photo } from '../data/photos'
+import { kindPhoto, type Photo } from '../data/photos'
 import { pastry, type ArtKind } from './art'
 import { eur, esc, href, typo } from './dom'
 import type { Product, Category } from '../data/products'
@@ -14,6 +14,8 @@ export interface HeroOpts {
   art?: ArtKind
   seed?: number
   actions?: string
+  /** Photo d'illustration affichée à côté du dessin (ou seule, sans dessin). */
+  photo?: Photo
 }
 
 /** En-tête commun des pages intérieures. */
@@ -27,7 +29,7 @@ export function pageHero(o: HeroOpts): string {
       <p class="lead" style="margin-top:1.4rem" data-reveal>${o.lead}</p>
       ${o.actions ? `<div class="cta-row" style="margin-top:1.4rem" data-reveal>${o.actions}</div>` : ''}
     </div>
-    ${o.art ? `<div class="phero__art" data-reveal>${pastry(o.art, o.seed ?? 0)}</div>` : ''}
+    ${o.photo ? `<div class="phero__media" data-reveal>${photoImg(o.photo, 'eager')}${o.art ? `<div class="phero__badge" aria-hidden="true">${pastry(o.art, o.seed ?? 0)}</div>` : ''}<span class="ph__cap">Photo d’illustration · ${esc(o.photo.credit)}</span></div>` : o.art ? `<div class="phero__art" data-reveal>${pastry(o.art, o.seed ?? 0)}</div>` : ''}
   </div>
 </section>`)
 }
@@ -46,7 +48,7 @@ export function productCard(p: Product, opts: { showAllergens?: boolean } = {}):
   const unit = p.unit === 'pièce' ? '' : ` ${p.unit}`
   return `
 <article class="pcard" data-reveal>
-  <div class="pcard__art" style="--tile:${tile(p.seed + 1)}">${pastry(p.kind, p.seed)}</div>
+  ${cardMedia(p.kind, p.seed, tile(p.seed + 1))}
   <div class="pcard__body">
     <h3>${esc(p.name)}</h3>
     <p>${esc(p.description)}</p>
@@ -108,7 +110,7 @@ export function quoteCard(q: { text: string; source: string; critical?: boolean;
 
 /** Photo d'illustration (Unsplash) : figure lazy, recadrée en cover. */
 export function photoFig(ph: Photo, cls = '', caption = true): string {
-  return `<figure class="ph ${cls}" data-reveal><img src="${ph.src}" alt="${esc(ph.alt)}" width="${ph.width}" height="${ph.height}" loading="lazy" decoding="async" />${caption ? `<figcaption class="ph__cap">Illustration · ${esc(ph.credit)}</figcaption>` : ''}</figure>`
+  return `<figure class="ph ${cls}" data-reveal><img src="${ph.src}" alt="${esc(ph.alt)}" width="${ph.width}" height="${ph.height}" loading="lazy" decoding="async" />${caption ? `<figcaption class="ph__cap">Photo d’illustration · ${esc(ph.credit)}</figcaption>` : ''}</figure>`
 }
 
 /** Bande de photos d'illustration pour une page (titre + grille). */
@@ -120,4 +122,20 @@ export function photoBand(title: string, list: Photo[], lead = 'Photos d’illus
     <div class="ph-grid">${list.map((ph, i) => photoFig(ph, i % 5 === 0 ? 'ph--tall' : '', true)).join('')}</div>
   </div>
 </section>`
+}
+
+/** Balise img d'une photo d'illustration (dimensions intrinsèques, lazy par défaut). */
+export function photoImg(ph: Photo, loading: 'lazy' | 'eager' = 'lazy'): string {
+  return `<img src="${ph.src}" alt="${esc(ph.alt)}" width="${ph.width}" height="${ph.height}" loading="${loading}" decoding="async"${loading === 'eager' ? ' fetchpriority="high"' : ''} />`
+}
+
+/** Média d'une carte produit : photo d'illustration + pastille du dessin SVG original. */
+export function cardMedia(kind: ArtKind, seed: number, bg: string): string {
+  const ph = kindPhoto(kind, seed)
+  return `<div class="pcard__art pcard__art--photo" style="--tile:${bg}">${photoImg(ph)}<span class="pcard__badge" aria-hidden="true">${pastry(kind, seed)}</span><span class="pcard__cap">Photo d’illustration</span></div>`
+}
+
+/** Bande de photo fine (pages FAQ, légales, 404). */
+export function photoStrip(list: Photo[]): string {
+  return `<section class="section section--tight" aria-label="Photos d’illustration"><div class="wrap"><div class="ph-slim">${list.map((ph) => photoFig(ph, 'ph--slim')).join('')}</div></div></section>`
 }

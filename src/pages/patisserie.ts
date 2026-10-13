@@ -2,7 +2,7 @@ import { photoBand } from '../core/ui'
 import { photo } from '../data/photos'
 import { pastry, postcardSky } from '../core/art'
 import { $, $$, esc, typo } from '../core/dom'
-import { gsap, ScrollTrigger, onLeave, withContext } from '../core/motion'
+import { MQ, gsap, ScrollTrigger, onLeave } from '../core/motion'
 import { btn, pageHero, productCard } from '../core/ui'
 import { creations } from '../data/creations'
 import { products, categoryLabels, type Product } from '../data/products'
@@ -49,6 +49,7 @@ ${pageHero({
   kicker: 'Rue Hoche et passage Jeanne-Chauveau',
   lead: 'Des classiques bien faits, des cakes de voyage et des créations de saison qui portent le nom d’un lieu. Tout est fait maison.',
   art: 'saintho',
+  photo: photo('tartes-vitrine'),
   actions: btn('Voir l’atlas', '#atlas', 'btn--amber', true) + btn('Commander', 'commandes', 'btn--ghost'),
 })}
 
@@ -62,6 +63,7 @@ ${pageHero({
       ${creations.map(postcard).join('')}
     </div>
     <div class="atlas__bar" aria-hidden="true"><i id="atlas-bar"></i></div>
+    <p class="swipe-hint wrap" aria-hidden="true">Glissez pour voyager <span>&rarr;</span></p>
   </div>
 </section>
 
@@ -146,37 +148,53 @@ function initAtlas(main: HTMLElement): void {
   const section = $('#atlas', main)!
   const track = $('#atlas-track', main)!
   const bar = $('#atlas-bar', main)!
-  const mq = window.matchMedia('(min-width: 900px) and (prefers-reduced-motion: no-preference)')
-
-  const build = () => {
-    if (!mq.matches) {
-      section.classList.remove('is-pinned')
-      track.addEventListener('scroll', onScroll, { passive: true })
-      return
-    }
-    section.classList.add('is-pinned')
-    withContext(main, () => {
-      const dist = () => Math.max(0, track.scrollWidth - window.innerWidth)
-      gsap.to(track, {
-        x: () => -dist(),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: section,
-          start: 'top top',
-          end: () => `+=${dist() + window.innerHeight * 0.2}`,
-          pin: true,
-          scrub: 0.8,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => gsap.set(bar, { scaleX: Math.max(0.04, self.progress) }),
-        },
-      })
-    })
-  }
   const onScroll = () => {
     const max = track.scrollWidth - track.clientWidth
     gsap.set(bar, { scaleX: Math.max(0.04, max ? track.scrollLeft / max : 1) })
   }
-  build()
+  const cards = $$<HTMLElement>('.card-pc', track)
+
+  // Pointeur fin : défilement horizontal épinglé et scrubé. Tactile, tablette ou mouvement réduit :
+  // pas d'épinglage fragile, une piste à glisser (scroll-snap) avec une entrée en cascade légère.
+  const mm = gsap.matchMedia()
+  mm.add({ pin: MQ.desktop, touch: MQ.touch, reduced: MQ.reduced }, (ctx) => {
+    const { pin, reduced } = ctx.conditions as { pin: boolean; touch: boolean; reduced: boolean }
+    if (!pin) {
+      section.classList.remove('is-pinned')
+      gsap.set(track, { clearProps: 'transform' })
+      track.addEventListener('scroll', onScroll, { passive: true })
+      onScroll()
+      if (!reduced) {
+        gsap.from(cards.slice(0, 4), {
+          x: 48,
+          opacity: 0,
+          duration: 0.7,
+          stagger: 0.08,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity',
+          scrollTrigger: { trigger: track, start: 'top 88%', once: true },
+        })
+      }
+      return () => track.removeEventListener('scroll', onScroll)
+    }
+    section.classList.add('is-pinned')
+    const dist = () => Math.max(0, track.scrollWidth - window.innerWidth)
+    gsap.to(track, {
+      x: () => -dist(),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: section,
+        start: 'top top',
+        end: () => `+=${dist() + window.innerHeight * 0.2}`,
+        pin: true,
+        scrub: 0.8,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => gsap.set(bar, { scaleX: Math.max(0.04, self.progress) }),
+      },
+    })
+    return () => section.classList.remove('is-pinned')
+  })
   ScrollTrigger.refresh()
-  onLeave(() => track.removeEventListener('scroll', onScroll))
+  onLeave(() => mm.revert())
 }

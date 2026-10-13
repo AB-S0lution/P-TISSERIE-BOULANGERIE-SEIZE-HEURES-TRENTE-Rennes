@@ -1,6 +1,7 @@
 import { pastry } from '../core/art'
 import { $, esc, typo } from '../core/dom'
-import { btn, pageHero, tile } from '../core/ui'
+import { btn, pageHero, photoImg, tile } from '../core/ui'
+import { photo } from '../data/photos'
 import { events } from '../data/events'
 import { products } from '../data/products'
 import { addresses, site } from '../data/site'
@@ -16,6 +17,8 @@ const OCCASIONS = [
   { id: 'bureau', name: 'Goûter de bureau', text: 'Cookies et cakes de voyage pour toute une équipe.', kind: 'cookie' as const, seed: 0 },
 ]
 
+const OCC_PH = ['tarte-fruits-rouges', 'planche-viennoiseries', 'macarons', 'cookies', 'gateau-chocolat', 'babka-noisettes']
+
 export function render(main: HTMLElement): void {
   const choices = products.filter((p) => ['partager', 'entremets'].includes(p.category) || p.tags.includes('a-partager'))
   main.innerHTML = typo(`
@@ -25,6 +28,7 @@ ${pageHero({
   lead: 'Il n’y a pas de commande en ligne. Préparez votre demande ici, puis appelez la boutique pour la confirmer.',
   art: 'entremets',
   seed: 5,
+  photo: photo('desserts-table'),
   actions: btn('Préparer ma demande', '#demande', 'btn--amber', true),
 })}
 
@@ -32,7 +36,7 @@ ${pageHero({
   <div class="wrap">
     <h2 class="h-lg" data-split>Pour quelles occasions ?</h2>
     <div class="cards cards--2" style="margin-top:2rem">${OCCASIONS.map(
-      (o, i) => `<article class="card" data-reveal style="display:grid;grid-template-columns:96px 1fr;gap:1.2rem;align-items:center;background:${tile(i + 3)};color:#22191A;--muted:#3b2f2c">${pastry(o.kind, o.seed)}<div><h3 class="h-md">${esc(o.name)}</h3><p style="margin:0">${esc(o.text)}</p></div></article>`,
+      (o, i) => `<article class="card occasion" data-reveal style="background:${tile(i + 3)};color:#22191A;--muted:#3b2f2c"><figure class="occasion__ph">${photoImg(photo(OCC_PH[i % OCC_PH.length]))}<span class="occasion__art" aria-hidden="true">${pastry(o.kind, o.seed)}</span><figcaption class="ph__cap">Photo d’illustration</figcaption></figure><div><h3 class="h-md">${esc(o.name)}</h3><p style="margin:0">${esc(o.text)}</p></div></article>`,
     ).join('')}</div>
   </div>
 </section>

@@ -1,6 +1,7 @@
 import { $, esc, typo } from '../core/dom'
 import { onLeave } from '../core/motion'
-import { btn, gouterMessage, pageHero } from '../core/ui'
+import { btn, gouterMessage, pageHero, photoImg } from '../core/ui'
+import { photo } from '../data/photos'
 import { hoursHoche, hoursJeanneChauveau, closedMonday } from '../data/hours'
 import { addresses, site } from '../data/site'
 
@@ -10,10 +11,11 @@ export const description = 'Rue Hoche et passage Jeanne-Chauveau à Rennes : adr
 export function render(main: HTMLElement): void {
   const [hoche, jc] = addresses
   main.innerHTML = typo(`
-${pageHero({ title: 'Nos deux adresses', kicker: 'Contact et accès', lead: 'Une pâtisserie rue Hoche, une boulangerie au passage Jeanne-Chauveau. Deux façons de goûter à Rennes.', art: 'macaron', seed: 0 })}
+${pageHero({ title: 'Nos deux adresses', kicker: 'Contact et accès', lead: 'Une pâtisserie rue Hoche, une boulangerie au passage Jeanne-Chauveau. Deux façons de goûter à Rennes.', art: 'macaron', seed: 0, photo: photo('comptoir-vitrines') })}
 <section class="section section--tight">
   <div class="wrap addr">
-    <article class="card" data-reveal>
+    <article class="card card--media" data-reveal>
+      <figure class="card__ph">${photoImg(photo('patisseries-comptoir'))}<figcaption class="ph__cap">Photo d’illustration, pas la boutique</figcaption></figure>
       <h3>${esc(hoche.name)}</h3><p class="muted">${esc(hoche.role)}</p>
       <dl><dt>Adresse</dt><dd>${esc(hoche.street)}<br />${esc(hoche.city)}</dd><dt>Téléphone</dt><dd><a href="tel:+33299633765">${esc(hoche.phone!)}</a></dd><dt>Métro</dt><dd>Sainte-Anne (à confirmer)</dd></dl>
       <h4 class="h-md" style="margin:1rem 0 .4rem">Horaires <span class="flag">à confirmer</span></h4>
@@ -21,7 +23,8 @@ ${pageHero({ title: 'Nos deux adresses', kicker: 'Contact et accès', lead: 'Une
       <p class="small muted" style="margin-top:.8rem">${esc(hoursHoche.note)} ${esc(closedMonday.text)}</p>
       <div class="cta-row" style="margin-top:1rem">${btn('Ouvrir le plan', hoche.mapsUrl, 'btn--amber')}${btn('Appeler', 'tel:+33299633765', 'btn--ghost')}</div>
     </article>
-    <article class="card" data-reveal>
+    <article class="card card--media" data-reveal>
+      <figure class="card__ph">${photoImg(photo('pains-vitrine'))}<figcaption class="ph__cap">Photo d’illustration, pas la boutique</figcaption></figure>
       <h3>${esc(jc.name)}</h3><p class="muted">${esc(jc.role)}</p>
       <dl><dt>Adresse</dt><dd>${esc(jc.street)}<br />${esc(jc.city)}</dd><dt>Téléphone</dt><dd><a href="tel:+33223472024">${esc(jc.phone!)}</a><br /><span class="small muted">${esc(jc.phoneNote!)}</span></dd></dl>
       <h4 class="h-md" style="margin:1rem 0 .4rem">Horaires <span class="flag">à confirmer</span></h4>

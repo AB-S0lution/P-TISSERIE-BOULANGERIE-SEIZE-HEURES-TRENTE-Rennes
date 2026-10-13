@@ -6,7 +6,7 @@
 - **Routage** : SPA History API (`src/core/router.ts`), routes dans `src/main.ts`, pages en import dynamique `src/pages/*.ts` qui exportent `title`, `description`, `render` (et `meta` pour l'article). `public/404.html` redirige vers `?p=`, restauré dans `index.html`.
 - **Mouvement** : classe `motion-on` sur `<html>` (script inline) active les états initiaux ; absente en `prefers-reduced-motion`. Nettoyage à la sortie de page : `onLeave`, `withContext`, `leavePage` (`src/core/motion.ts`). Pas de `transition: all`, pas de tiret cadratin dans les textes.
 - **Typographie FR** : passer le HTML injecté par `typo()` (`src/core/dom.ts`) pour les espaces insécables. Attention : un heredoc shell peut convertir les `\u....` en vrais caractères.
-- **Art** : SVG original (`src/core/art.ts`) ; aucune photo ni logo de la boutique.
+- **Art** : SVG original (`src/core/art.ts`) + photos d'illustration Unsplash (`src/data/photos.ts`, `public/photos`, `kindPhoto()` pour les cartes) ; jamais de photo ni logo de la boutique. Mouvement : `MQ` (`src/core/motion.ts`) sépare pointeur fin / tactile via `gsap.matchMedia`.
 - **Données** : `src/data/*.ts`, toujours marquées « exemple » sauf faits sourcés (`real`, `priceReal`, `verified`).
 - **Lancer / vérifier** : `npm run dev` ; `npm run typecheck && npm run build` ; `npx vite preview --port 4182 --strictPort` (base `/P-TISSERIE-BOULANGERIE-SEIZE-HEURES-TRENTE-Rennes/`).
 - **Git** : ne jamais committer ni pousser sans demande.

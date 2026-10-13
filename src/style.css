@@ -67,7 +67,7 @@
 html {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
-  scroll-padding-top: calc(var(--header-h) + 16px);
+  scroll-padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px) + 16px);
 }
 html.lenis,
 html.lenis body {
@@ -354,6 +354,11 @@ time {
   -webkit-backdrop-filter: blur(14px) saturate(160%);
   border-bottom: 1px solid var(--line);
   view-transition-name: site-header;
+  /* Encoche : la barre fixe s'allonge de la zone sûre au lieu de passer dessous. */
+  height: calc(var(--header-h) + env(safe-area-inset-top, 0px));
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
 }
 .brand {
   display: flex;
@@ -488,7 +493,7 @@ time {
 .menu__inner {
   width: min(1100px, 100% - var(--gutter) * 2);
   margin: 0 auto;
-  padding: calc(var(--header-h) + 24px) 0 40px;
+  padding: calc(var(--header-h) + env(safe-area-inset-top, 0px) + 24px) 0 calc(40px + env(safe-area-inset-bottom, 0px));
 }
 .menu__list {
   display: grid;
@@ -550,7 +555,7 @@ time {
 
 /* ---------- Page hero (inner pages) ---------- */
 .phero {
-  padding: calc(var(--header-h) + clamp(40px, 8vw, 110px)) 0 clamp(36px, 6vw, 80px);
+  padding: calc(var(--header-h) + env(safe-area-inset-top, 0px) + clamp(28px, 8vw, 110px)) 0 clamp(36px, 6vw, 80px);
   position: relative;
   overflow: clip;
 }
@@ -560,7 +565,7 @@ time {
   align-items: end;
 }
 .phero h1 {
-  font-size: clamp(2.8rem, 8.4vw, 7.4rem);
+  font-size: clamp(2.3rem, 8.4vw, 7.4rem);
   line-height: 0.93;
 }
 .phero__art {
@@ -580,7 +585,7 @@ time {
 /* ---------- Home: scène du cadran ---------- */
 .scene {
   position: relative;
-  min-height: 100dvh;
+  min-height: 100svh;
   overflow: hidden;
   color: var(--ink);
   --muted: #2d2a2a;
@@ -614,7 +619,7 @@ time {
 .scene__grid {
   position: relative;
   z-index: 3;
-  min-height: 100dvh;
+  min-height: 100svh;
   display: grid;
   align-content: center;
   justify-items: center;
@@ -631,7 +636,7 @@ time {
   grid-area: 1 / 1;
 }
 .copy-intro h1 {
-  font-size: clamp(2.7rem, 9.4vw, 6.6rem);
+  font-size: clamp(2.3rem, 9.4vw, 6.6rem);
   line-height: 0.92;
 }
 .copy-intro p {
@@ -667,7 +672,7 @@ time {
   max-width: 36ch;
 }
 .scene__dial {
-  width: min(78vw, 44dvh);
+  width: min(78vw, 44svh);
   justify-self: center;
 }
 .dial {
@@ -730,13 +735,13 @@ html:not(.motion-on) .hours-stages {
   position: absolute;
   inset: 0;
   z-index: 6;
-  min-height: 100dvh;
+  min-height: 100svh;
   clip-path: circle(0% at 50% 50%);
 }
 html:not(.motion-on) .vitrine {
   position: relative;
   z-index: 6;
-  min-height: 70vh;
+  min-height: 70svh;
   padding-block: 80px;
 }
 .vitrine__in {
@@ -1095,7 +1100,7 @@ html:not(.motion-on) .vitrine {
   padding-right: 20vw;
 }
 .motion-on .atlas.is-pinned .atlas__pin {
-  height: 100dvh;
+  height: 100svh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1893,7 +1898,7 @@ html:not(.motion-on) .pc.is-flipped {
 
 /* 404 */
 .nf {
-  min-height: 100dvh;
+  min-height: 100svh;
   display: grid;
   place-items: center;
   text-align: center;
@@ -2040,7 +2045,7 @@ html:not(.motion-on) .pc.is-flipped {
 /* Photos d'illustration (Unsplash) */
 .ph { position: relative; margin: 0; overflow: hidden; border-radius: 1.25rem; background: #EFE3C8; border: 2px solid #22191A; }
 .ph img { display: block; width: 100%; height: 100%; aspect-ratio: 4 / 3; object-fit: cover; transform: scale(1.001); transition: transform .7s cubic-bezier(.2,.7,.2,1); }
-.ph:hover img { transform: scale(1.04); }
+@media (hover: hover) and (pointer: fine) { .ph:hover img { transform: scale(1.04); } }
 .ph--tall img { aspect-ratio: 3 / 4; }
 .ph--wide img { aspect-ratio: 16 / 7; }
 .ph__cap { position: absolute; left: .6rem; bottom: .6rem; padding: .2rem .55rem; border-radius: .6rem; background: rgba(246,238,225,.92); color: #22191A; font-family: 'Martian Mono Variable', ui-monospace, monospace; font-size: 0.75rem; letter-spacing: 0; max-width: calc(100% - 1.2rem); }
@@ -2052,3 +2057,204 @@ html:not(.motion-on) .pc.is-flipped {
 .post__photo { margin: 0; overflow: hidden; border-radius: 1rem 1rem 0 0; }
 .post__photo img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
 @media (prefers-reduced-motion: reduce) { .ph img { transition: none; } .ph:hover img { transform: none; } }
+
+
+/* ==========================================================================
+   Photos d'illustration partout + passe téléphone / tablette
+   ========================================================================== */
+
+/* Titres et textes longs : jamais de débordement horizontal (mots composés, URL). */
+h1, h2, h3, h4, p, li, dd, dt, td, th, figcaption, blockquote { overflow-wrap: break-word; }
+.phero h1, .h-xl, .h-lg { hyphens: manual; }
+
+/* En-tête de page : photo + pastille du dessin SVG */
+.phero__media {
+  position: relative;
+  justify-self: end;
+  width: min(100%, 460px);
+  border-radius: 1.25rem;
+  overflow: hidden;
+  border: 2px solid #22191a;
+  background: #efe3c8;
+  aspect-ratio: 4 / 5;
+}
+.phero__media img { width: 100%; height: 100%; object-fit: cover; }
+.phero__media .ph__cap { position: absolute; left: .6rem; bottom: .6rem; }
+.phero__badge {
+  position: absolute;
+  right: .7rem;
+  top: .7rem;
+  width: clamp(72px, 22%, 112px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid #22191a;
+  display: grid;
+  place-items: center;
+  padding: 8px;
+  transform: rotate(-6deg);
+}
+.phero__badge .art { width: 100%; height: auto; }
+@media (max-width: 879px) {
+  .phero__media { justify-self: stretch; width: 100%; aspect-ratio: 16 / 10; }
+}
+@media (min-width: 600px) and (max-width: 879px) {
+  .phero__media { aspect-ratio: 16 / 8; }
+}
+
+/* Cartes produit : la photo d'abord, le dessin original en pastille */
+.pcard__art--photo { position: relative; padding: 0; overflow: hidden; display: block; }
+.pcard__art--photo img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 5 / 4; transition: transform .7s var(--ease-out); }
+.pcard__badge {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: clamp(44px, 28%, 72px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--tile);
+  border: 1.5px solid #22191a;
+  display: grid;
+  place-items: center;
+  padding: 5px;
+}
+.pcard__art--photo .pcard__badge .art { width: 100%; height: auto; }
+.pcard__cap {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  padding: .15rem .45rem;
+  border-radius: .5rem;
+  background: rgb(246 238 225 / .92);
+  color: #22191a;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.4;
+}
+@media (hover: hover) and (pointer: fine) {
+  .pcard:hover .pcard__art--photo img { transform: scale(1.05); }
+}
+
+/* Cartes génériques avec photo (formules, engagements, rôles, adresses) */
+.card--media { overflow: hidden; }
+.card__ph {
+  position: relative;
+  margin: calc(-1 * clamp(1.2rem, 2.4vw, 2rem)) calc(-1 * clamp(1.2rem, 2.4vw, 2rem)) 1.1rem;
+  overflow: hidden;
+}
+.card__ph img { width: 100%; height: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.card__ph--short img { aspect-ratio: 21 / 9; }
+.card__ph .ph__cap { position: absolute; left: .6rem; bottom: .6rem; }
+li.card--media { list-style: none; }
+
+/* Occasions (commandes) */
+.occasion { display: grid; gap: 1rem; padding: 0; overflow: hidden; }
+.occasion > div { padding: 0 clamp(1.2rem, 2.4vw, 2rem) clamp(1.2rem, 2.4vw, 2rem); }
+.occasion__ph { position: relative; margin: 0; }
+.occasion__ph img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.occasion__art {
+  position: absolute;
+  right: .7rem;
+  bottom: -1.4rem;
+  width: 76px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1.5px solid #22191a;
+  display: grid;
+  place-items: center;
+  padding: 6px;
+}
+.occasion__art .art { width: 100%; height: auto; }
+.occasion__ph .ph__cap { position: absolute; left: .6rem; bottom: .6rem; }
+
+/* Frise (maison) */
+.tl__ph { position: relative; margin: 0 0 .9rem; border-radius: 1rem; overflow: hidden; max-width: 520px; border: 2px solid #22191a; }
+.tl__ph img { width: 100%; aspect-ratio: 16 / 8; object-fit: cover; }
+.tl__ph .ph__cap { position: absolute; left: .6rem; bottom: .6rem; }
+@media (min-width: 900px) {
+  .timeline { grid-template-columns: repeat(3, minmax(0, 1fr)); padding-left: 0; border-left: 0; border-top: 2px solid var(--line); padding-top: 1.6rem; }
+  .tl::before { left: 0; top: calc(-1.6rem - 7px); }
+}
+
+/* Panneau dessin + photo */
+.panel-art--duo { display: grid; gap: 1rem; grid-template-columns: 1fr 1fr; align-items: center; }
+.panel-art__ph img { aspect-ratio: 3 / 4; }
+@media (max-width: 479px) { .panel-art--duo { grid-template-columns: 1fr; } .panel-art--duo > .art { max-width: 260px; margin-inline: auto; } }
+
+/* Bande fine (FAQ, pages légales) */
+.ph-slim { display: grid; gap: .8rem; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ph--slim img { aspect-ratio: 4 / 3; }
+@media (max-width: 559px) {
+  .ph-slim { grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: 78%; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: .4rem; }
+  .ph-slim .ph { scroll-snap-align: start; }
+}
+.prose__ph { margin: 1.6rem 0 2rem; }
+.nf__ph { width: min(100%, 520px); margin: 2rem auto 0; }
+
+/* Images : réserver la place avant chargement */
+.ph img, .post__photo img, .card__ph img, .pcard__art--photo img { background: #efe3c8; }
+
+/* Indices de glissement (défilements horizontaux) */
+.swipe-hint {
+  display: none;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--muted);
+  margin: .8rem 0 0;
+}
+.swipe-hint span { display: inline-block; }
+.motion-on .swipe-hint span { animation: nudge 1.6s var(--ease-in-out) infinite; }
+@keyframes nudge { 50% { transform: translateX(6px); } }
+.atlas:not(.is-pinned) .swipe-hint { display: block; padding-bottom: 1.2rem; }
+@media (pointer: coarse), (max-width: 759px) { .swipe-hint--strip { display: block; } }
+.ph-strip { -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent); mask-image: linear-gradient(90deg, #000 88%, transparent); overscroll-behavior-x: contain; }
+.atlas__track { overscroll-behavior-x: contain; }
+
+/* Tablettes : grilles moins serrées */
+@media (min-width: 760px) and (max-width: 1023px) {
+  .cards--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .post, .post:nth-child(2) { grid-column: span 3; }
+  .post:nth-child(1) { grid-column: span 6; }
+}
+@media (min-width: 800px) and (max-width: 1023px) {
+  .footer__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .footer__brand { grid-column: 1 / -1; }
+}
+
+/* Téléphones */
+@media (max-width: 479px) {
+  .values { grid-template-columns: 1fr; }
+  .value h3 { font-size: clamp(1.8rem, 9vw, 2.4rem); }
+  .stat b { font-size: clamp(2.1rem, 11vw, 2.6rem); }
+  .addr dl { grid-template-columns: 1fr; gap: .1rem; }
+  .addr dd { margin-bottom: .5rem; }
+  .hours th, .hours td { display: block; text-align: left; border: 0; padding: .1rem 0; }
+  .hours tr { display: block; padding: .5rem 0; border-bottom: 1px solid var(--line); }
+  .stage { min-height: 360px; }
+  .timeline { padding-left: 1.2rem; }
+  .tl::before { left: calc(-1.2rem - 7px); }
+  .lead { font-size: 1.05rem; }
+}
+@media (max-width: 359px) {
+  .pgrid, .pgrid--home { grid-template-columns: 1fr; }
+}
+.footer__links a, .footer__bottom a { display: inline-flex; align-items: center; min-height: 44px; }
+.footer__links li + li { margin-top: 0; }
+.site-footer { padding-bottom: env(safe-area-inset-bottom, 0px); }
+.lightbox { padding: max(20px, env(safe-area-inset-top, 0px)) max(20px, env(safe-area-inset-right, 0px)) max(20px, env(safe-area-inset-bottom, 0px)) max(20px, env(safe-area-inset-left, 0px)); }
+
+/* Mobile et tactile : filtres coûteux allégés */
+@media (max-width: 899px), (pointer: coarse) {
+  .site-header { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--bg); }
+  .dial { filter: none; }
+  .phero__art .art { filter: none; }
+}
+
+/* Boucles CSS mises en pause hors écran (classe posée par motion.ts) */
+.is-offscreen, .is-offscreen * { animation-play-state: paused !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pcard__art--photo img { transition: none; }
+  .motion-on .swipe-hint span { animation: none; }
+}

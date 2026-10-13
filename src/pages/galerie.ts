@@ -2,16 +2,16 @@ import { pastry } from '../core/art'
 import { $, $$, esc, typo } from '../core/dom'
 import { gsap } from '../core/motion'
 import { pageHero, photoBand } from '../core/ui'
-import { photos } from '../data/photos'
+import { photo, photos } from '../data/photos'
 import { gallery } from '../data/gallery'
 
 export const title = 'Galerie | 16h30, Seize Heures Trente, Rennes'
-export const description = 'Galerie d’illustrations originales : pâtisseries, pains et objets de 16h30. Aucune photo de la maison, tout est dessiné.'
+export const description = 'Galerie de 16h30 : illustrations originales en SVG et photos d’illustration libres de droits. Aucune photo de la maison.'
 
 export function render(main: HTMLElement): void {
   const sets = ['Tout', ...Array.from(new Set(gallery.map((g) => g.set)))]
   main.innerHTML = typo(`
-${pageHero({ title: 'La galerie', kicker: 'Dessiné, pas photographié', lead: 'Vingt illustrations originales en SVG. Les vraies photos viendront de la maison, avec son accord.', art: 'macaron', seed: 3 })}
+${pageHero({ title: 'La galerie', kicker: 'Dessins et photos d’illustration', lead: 'Des photos libres de droits et vingt illustrations originales en SVG. Les vraies photos viendront de la maison, avec son accord.', art: 'macaron', seed: 3, photo: photo('macarons') })}
 ${photoBand('Photothèque', photos, `${photos.length} photos d’illustration (Unsplash, licence Unsplash), pas des photos de la maison.`)}
 <section class="section section--tight">
   <div class="wrap">

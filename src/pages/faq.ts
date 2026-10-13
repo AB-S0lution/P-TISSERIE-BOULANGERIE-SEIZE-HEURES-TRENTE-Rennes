@@ -1,5 +1,6 @@
 import { esc, typo } from '../core/dom'
-import { btn, pageHero } from '../core/ui'
+import { btn, pageHero, photoStrip } from '../core/ui'
+import { photo } from '../data/photos'
 import { faq } from '../data/faq'
 
 export const title = 'Questions fréquentes | 16h30, Seize Heures Trente, Rennes'
@@ -8,7 +9,7 @@ export const description = 'Horaires, produits, consigne, commandes : les répon
 export function render(main: HTMLElement): void {
   const groups = Array.from(new Set(faq.map((f) => f.group)))
   main.innerHTML = typo(`
-${pageHero({ title: 'Questions fréquentes', kicker: 'FAQ', lead: 'Quatorze réponses. Les faits viennent de sources publiques ; le reste est à valider avec la maison.', art: 'tasse', seed: 6 })}
+${pageHero({ title: 'Questions fréquentes', kicker: 'FAQ', lead: 'Quatorze réponses. Les faits viennent de sources publiques ; le reste est à valider avec la maison.', art: 'tasse', seed: 6, photo: photo('gateau-citron-the') })}
 <section class="section section--tight">
   <div class="wrap faq-groups">${groups
     .map(
@@ -19,5 +20,6 @@ ${pageHero({ title: 'Questions fréquentes', kicker: 'FAQ', lead: 'Quatorze rép
     )
     .join('')}</div>
 </section>
+${photoStrip(['cookies', 'babka-tranche', 'glace-fraise'].map(photo))}
 <section class="section section--spruce"><div class="wrap split"><div class="stack"><h2 class="h-lg" data-split>Une autre question ?</h2><p class="lead" data-reveal>Le plus simple est d’appeler la boutique de la rue Hoche.</p></div><div class="cta-row" data-reveal>${btn('Appeler le 02 99 63 37 65', 'tel:+33299633765', 'btn--paper')}${btn('Nos deux adresses', 'contact', 'btn--ghost')}</div></div></section>`)
 }
