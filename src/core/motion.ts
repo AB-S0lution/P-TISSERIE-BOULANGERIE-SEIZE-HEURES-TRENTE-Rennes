@@ -73,9 +73,30 @@ export function enhance(root: HTMLElement): void {
       if (el.getBoundingClientRect().top < window.innerHeight * 1.1) gsap.to(el, { opacity: 1, y: 0, scale: 1, duration: 0.5, overwrite: true })
     })
   }, 3200)
+  // Filet permanent : dès que le défilement s'arrête (ou en bas de page, où les derniers blocs
+  // n'atteignent jamais leur déclencheur), tout [data-reveal] visible et encore transparent apparaît.
+  // Couvre aussi le contenu inséré après coup (filtres, listes).
+  let idle = 0
+  const sweep = () => {
+    const vh = window.innerHeight
+    const atEnd = window.scrollY + vh >= document.documentElement.scrollHeight - 4
+    const late = $$<HTMLElement>('[data-reveal]', root).filter((el) => {
+      if (getComputedStyle(el).opacity !== '0') return false
+      // Au-dessus de l'écran aussi : un déclencheur calculé sur une mise en page périmée a pu être sauté.
+      return el.getBoundingClientRect().top < vh * (atEnd ? 1.5 : 0.98)
+    })
+    if (late.length) gsap.to(late, { opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: Math.min(0.05, 0.4 / late.length), ease: 'power2.out', overwrite: true })
+  }
+  const onScrollIdle = () => {
+    clearTimeout(idle)
+    idle = window.setTimeout(sweep, 260)
+  }
+  if (!rm) window.addEventListener('scroll', onScrollIdle, { passive: true })
   onLeave(() => {
     clearTimeout(fallback)
     clearTimeout(revealFallback)
+    clearTimeout(idle)
+    window.removeEventListener('scroll', onScrollIdle)
   })
   pauseOffscreen(root)
 

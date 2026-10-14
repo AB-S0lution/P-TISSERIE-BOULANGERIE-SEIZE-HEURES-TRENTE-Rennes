@@ -40,6 +40,6 @@ export function render(main: HTMLElement, params: Record<string, string>): void 
     <p class="lead">${esc(post.excerpt)}</p>
     ${post.body.map((b, i) => `<p data-reveal>${esc(b)}</p>${i === 0 ? photoFig(photo(ARTICLE_EXTRA[(posts.indexOf(post) + 1) % ARTICLE_EXTRA.length]), 'ph--wide prose__ph') : ''}`).join('')}
   </div></section>
-  <section class="section section--tight"><div class="wrap"><hr class="divider" /><div class="cta-row" style="margin-top:2rem;justify-content:space-between"><a class="btn btn--ghost" href="${href('journal')}" data-link>Tous les articles</a><a class="btn btn--amber" href="${href('journal/' + next.slug)}" data-link>Suivant : ${esc(next.title.slice(0, 40))}${next.title.length > 40 ? '…' : ''}</a></div></div></section>
+  <section class="section section--tight"><div class="wrap"><hr class="divider" /><div class="cta-row" style="margin-top:2rem;justify-content:space-between"><a class="btn btn--ghost" href="${href('journal')}" data-link>Tous les articles</a><a class="btn btn--amber btn--wrap" href="${href('journal/' + next.slug)}" data-link>Suivant : ${esc(next.title.slice(0, 40))}${next.title.length > 40 ? '…' : ''}</a></div></div></section>
 </article>`)
 }

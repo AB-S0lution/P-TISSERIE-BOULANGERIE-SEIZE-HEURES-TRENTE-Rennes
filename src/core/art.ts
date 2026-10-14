@@ -125,6 +125,16 @@ export function pastry(kind: ArtKind, seed = 0): string {
   return `<svg class="art" viewBox="0 0 200 200" aria-hidden="true" focusable="false">${shadow}${body(kind, c)}</svg>`
 }
 
+/**
+ * Même dessin, servi en <img> (data URI) : une image est peinte depuis un bitmap en cache,
+ * alors que des dizaines de SVG en ligne étaient repeints à chaque image au défilement (cartes produit au téléphone).
+ */
+export function pastryImg(kind: ArtKind, seed = 0): string {
+  const c = pal(seed)
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">${shadow}${body(kind, c)}</svg>`
+  return `<img class="art" src="data:image/svg+xml,${encodeURIComponent(svg.replace(/\s+/g, ' '))}" alt="" width="200" height="200" decoding="async" />`
+}
+
 /** Four-panel postcard sky for the atlas : dégradé déterministe par graine. */
 export function postcardSky(seed: number): string {
   const skies = [

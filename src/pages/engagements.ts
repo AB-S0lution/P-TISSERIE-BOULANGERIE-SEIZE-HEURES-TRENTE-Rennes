@@ -69,7 +69,7 @@ ${pageHero({
         <circle cx="180" cy="180" r="10" fill="#E39A3B"/><text x="196" y="184" font-weight="700">Rennes</text>
         <g fill="#2E4A3C"><circle cx="212" cy="142" r="6"/><circle cx="135" cy="205" r="6"/><circle cx="240" cy="230" r="6"/><circle cx="108" cy="130" r="6"/><circle cx="270" cy="100" r="6"/></g>
         <g fill="#A8643A"><circle cx="70" cy="70" r="6"/></g>
-        <text x="220" y="140">Pacé : Beurre de Madame</text>
+        <text x="220" y="138">Pacé :<tspan x="220" dy="15">Beurre de Madame</tspan></text>
         <text x="30" y="205">Meunier breton</text>
         <text x="190" y="252">Maraîcher</text>
         <text x="40" y="126">Brasserie voisine</text>

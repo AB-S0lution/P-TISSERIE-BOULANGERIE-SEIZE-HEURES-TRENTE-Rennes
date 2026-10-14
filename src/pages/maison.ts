@@ -65,7 +65,7 @@ ${pageHero({
       <h2 class="h-lg" data-split>L’équipe, par métiers</h2>
       <p class="lead" data-reveal>Entre dix et dix-neuf personnes font vivre les deux adresses. Voici les rôles, sans noms : seule Marion Juhel est nommée sur ce site.</p>
     </div>
-    <ul class="cards" data-reveal>${roles
+    <ul class="cards cards--roles" data-reveal>${roles
       .map((r, i) => `<li class="card card--media"><figure class="card__ph card__ph--short">${photoImg(photo(ROLE_PH[i % ROLE_PH.length]))}<figcaption class="ph__cap">Photo d’illustration</figcaption></figure><h3 class="h-md">${esc(r.title)}</h3><p style="margin:0">${esc(r.text)}</p><p class="small muted" style="margin:.6rem 0 0">${esc(r.place)} <span class="sample-flag">exemple</span></p></li>`)
       .join('')}</ul>
   </div>

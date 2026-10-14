@@ -1,5 +1,5 @@
 import { kindPhoto, type Photo } from '../data/photos'
-import { pastry, type ArtKind } from './art'
+import { pastry, pastryImg, type ArtKind } from './art'
 import { eur, esc, href, typo } from './dom'
 import type { Product, Category } from '../data/products'
 import { categoryLabels } from '../data/products'
@@ -110,7 +110,7 @@ export function quoteCard(q: { text: string; source: string; critical?: boolean;
 
 /** Photo d'illustration (Unsplash) : figure lazy, recadrée en cover. */
 export function photoFig(ph: Photo, cls = '', caption = true): string {
-  return `<figure class="ph ${cls}" data-reveal><img src="${ph.src}" alt="${esc(ph.alt)}" width="${ph.width}" height="${ph.height}" loading="lazy" decoding="async" />${caption ? `<figcaption class="ph__cap">Photo d’illustration · ${esc(ph.credit)}</figcaption>` : ''}</figure>`
+  return `<figure class="ph ${cls}" data-reveal><img src="${ph.src}" alt="${esc(ph.alt)}" width="${ph.width}" height="${ph.height}" loading="lazy" decoding="async" />${caption ? `<figcaption class="ph__cap"><span class="ph__cap-pre">Photo d’illustration · </span>${esc(ph.credit)}</figcaption>` : ''}</figure>`
 }
 
 /** Bande de photos d'illustration pour une page (titre + grille). */
@@ -132,7 +132,7 @@ export function photoImg(ph: Photo, loading: 'lazy' | 'eager' = 'lazy'): string 
 /** Média d'une carte produit : photo d'illustration + pastille du dessin SVG original. */
 export function cardMedia(kind: ArtKind, seed: number, bg: string): string {
   const ph = kindPhoto(kind, seed)
-  return `<div class="pcard__art pcard__art--photo" style="--tile:${bg}">${photoImg(ph)}<span class="pcard__badge" aria-hidden="true">${pastry(kind, seed)}</span><span class="pcard__cap">Photo d’illustration</span></div>`
+  return `<div class="pcard__art pcard__art--photo" style="--tile:${bg}">${photoImg(ph)}<span class="pcard__badge" aria-hidden="true">${pastryImg(kind, seed)}</span><span class="pcard__cap">Photo d’illustration</span></div>`
 }
 
 /** Bande de photo fine (pages FAQ, légales, 404). */
